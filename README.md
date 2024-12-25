@@ -1,8 +1,8 @@
-### Local Assistant
+# Local Assistant
 
 LLM based workflow that works locally on your laptop
 
-# To run
+### To run
 
 Following env variables may have to be set
 
