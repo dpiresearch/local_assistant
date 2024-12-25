@@ -10,9 +10,9 @@ from typing import Optional, List, Any
 #
 # Environment variables to set
 #
-# OUTPUT_PATH
+# DONE_PATH
 # DISPLAY_PATH
-# BASE_DIRECTORY
+# OUTPUT_DIRECTORY
 # AZURE_OPENAI_API_KEY
 # AZURE_OPENAI_ENDPOINT
 # AZURE_OPENAI_API_VERSION
@@ -104,11 +104,11 @@ def find_latest_png() -> Optional[str]:
     """Find the most recently modified PNG file in the specified directory."""
     monitor_start_token = os.getenv("MONITOR_START_TOKEN", "monitor")
     monitor_end_token = os.getenv("MONITOR_END_TOKEN", ".png")
-    base_directory = os.getenv("BASE_DIRECTORY", "/Users/dpang/.screenpipe/output/")
+    output_directory = os.getenv("OUTPUT_DIRECTORY", "/Users/dpang/.screenpipe/output/")
     latest_file = None
     latest_time = 0
 
-    for root, _, files in os.walk(base_directory):
+    for root, _, files in os.walk(output_directory):
         for file in files:
             if file.lower().startswith(monitor_start_token) and file.lower().endswith(monitor_end_token):
                 full_path = os.path.join(root, file)
@@ -185,7 +185,7 @@ if __name__ == "__main__":
        "/Users/dpang/Desktop/waste1.png", # wasting time
     ]   
 
-    output_path = os.getenv("OUTPUT_PATH", "/Users/dpang/.screenpipe/done/")
+    done_path = os.getenv("DONE_PATH", "/Users/dpang/.screenpipe/done/")
     display_path = os.getenv("DISPLAY_PATH", "/Users/dpang/dev/ada-agent/notif.png")
 
     while True:
@@ -222,8 +222,8 @@ if __name__ == "__main__":
         try:
             # Move the file
             shutil.copy(image_file_to_examine, display_path)
-            shutil.move(image_file_to_examine, output_path)
-            print(f"File '{image_file_to_examine}' moved to '{output_path}' successfully.")
+            shutil.move(image_file_to_examine, done_path)
+            print(f"File '{image_file_to_examine}' moved to '{done_path}' successfully.")
         except Exception as e:
             raise Exception(f"An error occurred while moving the file: {e}")
 
